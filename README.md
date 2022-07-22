@@ -44,9 +44,9 @@ func main() {
 	route, _ := entities.NewRoute([]*entities.Pair{pair_weth_0, pair_0_1}, ether, token1)
 	trade, _ := entities.ExactIn(route, core.FromRawAmount(ether, big.NewInt(100)))
 	swapParams, _ := router.SwapCallParameters(trade, router.TradeOptions{
-		AllowedSlippage: slippage,
-		Recipient:       recipient,
-		Deadline:        deadline,
+		AllowedSlippage: core.NewPercent(big.NewInt(1), big.NewInt(100)),
+		Recipient:       common.HexToAddress("0x0000000000000000000000000000000000000004"),
+		Deadline:        big.NewInt(time.Now().Add(30 * time.Second).Unix()),
 	})
 
 	log.Println(swapParams.MethodName)
