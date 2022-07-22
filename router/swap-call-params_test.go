@@ -18,11 +18,11 @@ var (
 	token0    = core.NewToken(1, common.HexToAddress("0x0000000000000000000000000000000000000001"), 18, "t0", "t0")
 	token1    = core.NewToken(1, common.HexToAddress("0x0000000000000000000000000000000000000002"), 18, "t1", "t1")
 
-	amount0     = core.FromRawAmount(token0, big.NewInt(1000))
-	amount1     = core.FromRawAmount(token1, big.NewInt(1000))
-	pair_0_1, _ = entities.NewPair(amount0, amount1, nil)
+	amount0   = core.FromRawAmount(token0, big.NewInt(1000))
+	amount1   = core.FromRawAmount(token1, big.NewInt(1000))
+	ethAmount = core.FromRawAmount(core.WETH9[1], big.NewInt(1000))
 
-	ethAmount      = core.FromRawAmount(core.WETH9[1], big.NewInt(1000))
+	pair_0_1, _    = entities.NewPair(amount0, amount1, nil)
 	pair_weth_0, _ = entities.NewPair(ethAmount, amount0, nil)
 
 	slippage = core.NewPercent(big.NewInt(1), big.NewInt(100))
