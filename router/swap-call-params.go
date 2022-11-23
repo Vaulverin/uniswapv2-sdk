@@ -53,7 +53,7 @@ func SwapCallParameters(trade *entities.Trade, options TradeOptions) (*SwapParam
 	if etherIn && etherOut {
 		return nil, ErrEtherInOut
 	}
-	to := options.Recipient.Hex()
+	to := options.Recipient
 	slippage := options.AllowedSlippage
 	if slippage == nil {
 		slippage = core.NewPercent(big.NewInt(0), big.NewInt(1))
@@ -68,9 +68,9 @@ func SwapCallParameters(trade *entities.Trade, options TradeOptions) (*SwapParam
 		return nil, err
 	}
 	amountOut := minAmountOut.Quotient()
-	var path []string
+	var path []common.Address
 	for _, token := range trade.Route.Path {
-		path = append(path, token.Address.Hex())
+		path = append(path, token.Address)
 	}
 	deadline := options.Deadline
 	if options.Deadline == nil {
@@ -150,7 +150,7 @@ func SwapCallParametersPacked(trade *entities.Trade, options TradeOptions) (*big
 	if err != nil {
 		return nil, nil, err
 	}
-	data, err := routerABI.Pack(params.MethodName, params.Args)
+	data, err := routerABI.Pack(params.MethodName, params.Args...)
 	if err != nil {
 		return nil, nil, err
 	}
